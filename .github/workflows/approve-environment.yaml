@@ -1,0 +1,22 @@
+name: Approve Deployment
+run-name: Approve Deployment
+
+on:
+  workflow_dispatch:
+
+jobs:
+  staging:
+    environment: staging
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "1"
+      - run: echo "2"
+      - run: echo "3"
+
+  production:
+    environment: production
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "1"
+      - run: echo "2"
+      - run: echo "3"
