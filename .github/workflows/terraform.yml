@@ -47,7 +47,7 @@ jobs:
     - uses: actions/upload-artifact@v3
       name: Upload plan
       with:
-        name: tf_plan
+        name: tf_plan_${{ inputs.environment }}
         path: terraform_environments/${{ inputs.environment }}/tf_plan.out
         retention-days: 1
 
@@ -129,7 +129,7 @@ jobs:
     - uses: actions/download-artifact@v3
       name: Download plan
       with:
-        name: tf_plan
+        name: tf_plan_${{ inputs.environment }}
         path: terraform_environments/${{ inputs.environment }}
 
     - name: Terraform Apply
