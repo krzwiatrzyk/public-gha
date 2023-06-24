@@ -8,7 +8,6 @@ on:
 jobs:
   terraform: 
     name: Run Terraform
-    runs-on: ubuntu-latest
 
     strategy:
       fail-fast: false
@@ -16,12 +15,7 @@ jobs:
         environment:
         - staging
         - production
-    
-    steps:
-      - name: Git checkout
-        uses: actions/checkout@v3
-        
-      - name: Run for ${{ matrix.environment }}
-        uses: ./.github/workflows/terraform.yml
-        with:
-          environment: ${{ matrix.environment }}
+
+    uses: ./.github/workflows/terraform.yml
+    with:
+      environment: ${{ matrix.environment }}
