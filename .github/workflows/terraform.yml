@@ -48,8 +48,8 @@ jobs:
       name: Upload plan
       with:
         name: tf_plan
-        path: tf_plan.out
-        retentions-days: 1
+        path: terraform_environments/${{ inputs.environment }}/tf_plan.out
+        retention-days: 1
 
     - uses: actions/github-script@v6
       if: github.event_name == 'pull_request'
