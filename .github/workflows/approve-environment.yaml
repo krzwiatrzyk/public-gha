@@ -19,6 +19,6 @@ jobs:
     
     steps:
       - name: Run for ${{ matrix.environment }}
-        uses: .github/workflows/terraform.yaml
+        uses: ./.github/workflows/terraform.yaml
         with:
           environment: ${{ matrix.environment }}
