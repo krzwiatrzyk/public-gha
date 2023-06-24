@@ -130,6 +130,7 @@ jobs:
       name: Download plan
       with:
         name: tf_plan
+        path: terraform_environments/${{ inputs.environment }}
 
     - name: Terraform Apply
       id: plan
