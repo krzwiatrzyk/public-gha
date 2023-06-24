@@ -110,6 +110,8 @@ jobs:
           }
 
   apply:
+    needs:
+    - plan
     if: github.event_name != 'pull_request'
     environment: ${{ inputs.environment }}
     defaults:
