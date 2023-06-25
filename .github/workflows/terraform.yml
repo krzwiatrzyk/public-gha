@@ -74,7 +74,7 @@ jobs:
         <details><summary>Show Plan</summary>
 
         \`\`\`
-        ${{env.PLAN}}
+        ${{steps.plan.outputs.stdout}}
         \`\`\`
 
         </details>
