@@ -51,6 +51,35 @@ jobs:
         path: terraform_environments/${{ inputs.environment }}/tf_plan.out
         retention-days: 1
 
+    - name: Set summary
+      run: |
+        cat << EOF >> $GITHUB_STEP_SUMMARY
+        #### Terraform Environment \`${{ inputs.environment }}\`
+        #### Terraform Initialization ⚙️\`${{ steps.init.outcome }}\`
+        #### Terraform Validation 🤖\`${{ steps.validate.outcome }}\`
+
+        <details><summary>Validation Output</summary>
+
+        \`\`\`\n
+        ${{ steps.validate.outputs.stdout }}
+        \`\`\`
+
+        </details>
+
+        #### Terraform Plan 📖\`${{ steps.plan.outcome }}\`
+
+        <details><summary>Show Plan</summary>
+
+        \`\`\`\n
+        ${process.env.PLAN}
+        \`\`\`
+
+        </details>
+
+        *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`, Workflow: \`${{ github.workflow }}\`*`;
+        EOF
+
+      
     - uses: actions/github-script@v6
       if: github.event_name == 'pull_request'
       env:
