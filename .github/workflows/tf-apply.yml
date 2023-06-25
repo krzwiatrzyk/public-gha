@@ -1,0 +1,42 @@
+name: Terraform Apply
+run-name: Terraform apply run for ${{ inputs.environment }}
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Environment/workdir name"
+        type: string
+        required: true
+  workflow_call:
+    inputs:
+      environment:
+        type: string
+        required: true
+
+jobs:
+  apply:
+    if: github.event_name != 'pull_request'
+    environment: ${{ inputs.environment }}
+    defaults:
+      run:
+        working-directory: terraform_environments/${{ inputs.environment }}
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: hashicorp/setup-terraform@v2
+
+    - name: Terraform Init
+      id: init
+      run: terraform init
+
+    - uses: actions/download-artifact@v3
+      name: Download plan
+      with:
+        name: tf_plan_${{ inputs.environment }}
+        path: terraform_environments/${{ inputs.environment }}
+
+    - name: Terraform Apply
+      id: plan
+      run: terraform apply tf_plan.out
+      continue-on-error: true
