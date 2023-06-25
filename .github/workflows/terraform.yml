@@ -6,7 +6,10 @@ on:
     inputs:
       environment:
         description: "Environment/workdir name"
-        type: string
+        type: choice
+        options:
+          - staging
+          - production
         required: true
   workflow_call:
     inputs:
