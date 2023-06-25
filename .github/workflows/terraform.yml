@@ -54,7 +54,7 @@ jobs:
     - name: Set summary
       run: |
         cat << EOF
-        #### Terraform Environment `${{ inputs.environment }}`
+        #### Terraform Environment ${{ inputs.environment }}
         #### Terraform Initialization ⚙️`${{ steps.init.outcome }}`
         #### Terraform Validation 🤖`${{ steps.validate.outcome }}`
 
