@@ -53,7 +53,7 @@ jobs:
 
     - name: Set summary
       run: |
-        cat << EOF >> $GITHUB_STEP_SUMMARY
+        cat << EOF
         #### Terraform Environment `${{ inputs.environment }}`
         #### Terraform Initialization ⚙️`${{ steps.init.outcome }}`
         #### Terraform Validation 🤖`${{ steps.validate.outcome }}`
