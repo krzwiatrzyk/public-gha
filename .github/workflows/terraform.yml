@@ -57,9 +57,9 @@ jobs:
     - name: Set summary
       run: |
         cat <<EOF >> $GITHUB_STEP_SUMMARY
-        #### Terraform Environment \`${{ inputs.environment }}\`
-        #### Terraform Initialization ⚙️\`${{ steps.init.outcome }}\`
-        #### Terraform Validation 🤖\`${{ steps.validate.outcome }}\`
+        ## Terraform Environment - \`${{ inputs.environment }}\`
+        #### Terraform Initialization - ⚙️\`${{ steps.init.outcome }}\`
+        #### Terraform Validation - 🤖\`${{ steps.validate.outcome }}\`
 
         <details><summary>Validation Output</summary>
 
@@ -122,6 +122,7 @@ jobs:
           </details>
 
           *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`, Workflow: \`${{ github.workflow }}\`*`;
+          Summary: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
           // 3. If we have a comment, update it, otherwise create a new one
           if (botComment) {
