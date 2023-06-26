@@ -1,0 +1,24 @@
+name: Groups
+
+on:
+  workflow_dispatch:
+    inputs:
+        environment:
+            type: string
+
+jobs:
+    plan:
+      runs-on: ubuntu-latest
+      concurrency: ${{ github.ref == github.event.repository.default_branch && format('plan_{0}', inputs.environment)  || github.run_id }}
+      steps:
+      - run: |
+          sleep 60
+          echo Hey
+
+    apply:
+        runs-on: ubuntu-latest
+        concurrency: ${{ github.ref == github.event.repository.default_branch && format('apply_{0}', inputs.environment) || github.run_id }}
+        steps:
+        - run: |
+            sleep 120
+            echo Hey
