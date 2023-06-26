@@ -12,6 +12,7 @@ jobs:
       concurrency: ${{ github.ref == github.event.repository.default_branch && format('plan_{0}', inputs.environment)  || github.run_id }}
       steps:
       - run: |
+          echo ${{ github.event.repository.default_branch }} ${{ github.ref }}
           sleep 60
           echo Hey
 
