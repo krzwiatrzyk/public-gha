@@ -1,0 +1,15 @@
+name: TF Apply on approve
+run-name: 'TF Apply on approve for #${{ github.event.number }}'
+
+on:
+  pull_request:
+    branches:
+        - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - run: |
+        echo ${{ github.event.review.state }}
+        echo ${{ github.event }}
