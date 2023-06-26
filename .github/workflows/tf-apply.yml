@@ -20,7 +20,7 @@ jobs:
     environment: ${{ inputs.environment }}
     defaults:
       run:
-        working-directory: terraform_environments/${{ inputs.environment }}
+        working-directory: environments/${{ inputs.environment }}
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -34,7 +34,7 @@ jobs:
       name: Download plan
       with:
         name: tf_plan_${{ inputs.environment }}
-        path: terraform_environments/${{ inputs.environment }}
+        path: environments/${{ inputs.environment }}
 
     - name: Terraform Apply
       id: plan

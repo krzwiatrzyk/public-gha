@@ -4,6 +4,9 @@ run-name: Approve Deployment
 on:
   workflow_dispatch:
   pull_request:
+    paths:
+      - environments/**
+      - modules/**
     
 permissions:
   pull-requests: write
