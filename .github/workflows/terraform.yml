@@ -10,6 +10,7 @@ on:
         options:
           - staging
           - production
+        default: staging
         required: true
   workflow_call:
     inputs:
@@ -99,7 +100,8 @@ jobs:
           })
 
           // 2. Prepare format of the comment
-          const output = `#### Terraform Format and Style 🖌\`${{ steps.fmt.outcome }}\`
+          const output = `
+          #### Terraform Format and Style 🖌\`${{ steps.fmt.outcome }}\`
           #### Terraform Environment \`${{ inputs.environment }}\`
           #### Terraform Initialization ⚙️\`${{ steps.init.outcome }}\`
           #### Terraform Validation 🤖\`${{ steps.validate.outcome }}\`
@@ -115,14 +117,15 @@ jobs:
 
           <details><summary>Show Plan</summary>
 
-          \`\`\`\n
+          \`\`\`
           ${process.env.PLAN}
           \`\`\`
 
           </details>
 
-          *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`, Workflow: \`${{ github.workflow }}\`*`;
           Summary: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`, Workflow: \`${{ github.workflow }}\`*`;
+          
 
           // 3. If we have a comment, update it, otherwise create a new one
           if (botComment) {
@@ -146,6 +149,12 @@ jobs:
     - plan
     if: github.event_name != 'pull_request'
     environment: ${{ inputs.environment }}
+
+    concurrency: ${{ inputs.environment }}
+    # concurrency:
+    #   group: ${{ inputs.environment }}
+    #   cancel-in-progress: true
+
     defaults:
       run:
         working-directory: environments/${{ inputs.environment }}

@@ -17,6 +17,9 @@ on:
 jobs:
   apply:
     if: github.event_name != 'pull_request'
+
+    concurrency: ${{ inputs.environment }}
+
     environment: ${{ inputs.environment }}
     defaults:
       run:
