@@ -9,7 +9,7 @@ on:
 jobs:
     plan:
       runs-on: ubuntu-latest
-      concurrency: ${{ github.ref == github.event.repository.default_branch && format('plan_{0}', inputs.environment)  || github.run_id }}
+      concurrency: ${{ format('refs/heads/{0}', github.ref) == github.event.repository.default_branch && format('plan_{0}', inputs.environment)  || github.run_id }}
       steps:
       - run: |
           echo ${{ github.event.repository.default_branch }} ${{ github.ref }}
@@ -20,7 +20,7 @@ jobs:
         needs:
             - plan
         runs-on: ubuntu-latest
-        concurrency: ${{ github.ref == github.event.repository.default_branch && format('apply_{0}', inputs.environment) || github.run_id }}
+        concurrency: ${{ format('refs/heads/{0}', github.ref) == github.event.repository.default_branch && format('apply_{0}', inputs.environment) || github.run_id }}
         steps:
         - run: |
             sleep 120
