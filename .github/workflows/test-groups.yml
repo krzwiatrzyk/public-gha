@@ -17,6 +17,8 @@ jobs:
           echo Hey
 
     apply:
+        needs:
+            - plan
         runs-on: ubuntu-latest
         concurrency: ${{ github.ref == github.event.repository.default_branch && format('apply_{0}', inputs.environment) || github.run_id }}
         steps:
