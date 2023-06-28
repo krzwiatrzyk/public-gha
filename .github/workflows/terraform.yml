@@ -151,11 +151,11 @@ jobs:
     needs:
       - plan
     environment: ${{ inputs.environment }}
-    if: inputs.environment == 'development'
     runs-on: ubuntu-latest
     steps:
       - uses: trstringer/manual-approval@v1
         timeout-minutes: 60
+        if: inputs.environment == 'development'
         with:
           secret: ${{ github.TOKEN }}
           approvers: krzwiatrzyk
