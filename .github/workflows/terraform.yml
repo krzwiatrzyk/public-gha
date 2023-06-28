@@ -10,6 +10,7 @@ on:
         options:
           - staging
           - production
+          - development
         default: staging
         required: true
   workflow_call:
@@ -144,9 +145,31 @@ jobs:
             })
           }
 
+  wait-for-approval:
+    permissions:
+      issues: write
+    needs:
+      - plan
+    environment: ${{ inputs.environment }}
+    if: inputs.environment == 'development'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: trstringer/manual-approval@v1
+        timeout-minutes: 60
+        with:
+          secret: ${{ github.TOKEN }}
+          approvers: krzwiatrzyk
+          minimum-approvals: 1
+          issue-title: "Deploying ${{ inputs.environment }}"
+          issue-body: "Please approve or deny the deployment of ${{ inputs.environment }}"
+          exclude-workflow-initiator-as-approver: false
+          additional-approved-words: ''
+          additional-denied-words: ''
+
   apply:
     needs:
     - plan
+    - wait-for-approval
     if: github.event_name != 'pull_request'
     environment: ${{ inputs.environment }}
 
