@@ -1,0 +1,21 @@
+name: EchoIf
+
+on:
+  workflow_dispatch:
+    inputs:
+        a:
+          type: string
+          default: 'true'
+        b:
+          type: string
+          default: 'false'
+
+jobs:
+    plan:
+      runs-on: ubuntu-latest
+      steps:
+      - run: |
+          echo hey \
+          ${{ inputs.a == 'true' && '1 \' }}
+          ${{ inputs.2 == 'true' && '2 \' }}
+          
