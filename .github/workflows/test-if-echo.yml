@@ -16,5 +16,5 @@ jobs:
       steps:
       - run: |
           echo hey \
-          ${{ inputs.a == 'true' && '1 \' }}
-          ${{ inputs.b == 'true' && '2 \' }}
+          ${{ inputs.a == 'true' && '1 \' || '\'}}
+          ${{ inputs.b == 'true' && '2 \' || '\'}}
