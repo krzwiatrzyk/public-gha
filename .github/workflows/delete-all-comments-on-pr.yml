@@ -1,0 +1,23 @@
+name: Delete all comments in PR
+on:
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: 'PR number'
+        required: true
+      user:
+        description: "User id"
+        required: true
+
+permissions:
+  issues: write
+
+jobs:
+  delete-comments:
+    runs-on: ["ubuntu-latest"]
+    steps:
+      - uses: izhangzhihao/delete-comment@f8351c73557db7e571c891ef9a479528f8c7543f
+        with: 
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          delete_user_name: ${{ inputs.user }}
+          issue_number: ${{ inputs.pr_number }}  # remove comments from the current PR
