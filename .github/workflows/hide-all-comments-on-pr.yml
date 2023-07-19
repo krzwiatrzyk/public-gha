@@ -22,4 +22,4 @@ jobs:
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         hide_user_name: ${{ inputs.user }}
-        issue_number: ${{ pr_number }}
+        issue_number: ${{ inputs.pr_number }}
