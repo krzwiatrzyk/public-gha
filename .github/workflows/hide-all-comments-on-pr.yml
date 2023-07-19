@@ -1,0 +1,25 @@
+name: Hide all comments in PR
+on:
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: 'PR number'
+        required: true
+      user:
+        description: "User id"
+        required: true
+
+permissions:
+  issues: read
+  pull-requests: write
+
+jobs:
+  hide-comments:
+    runs-on: ["ubuntu-latest"]
+    steps:
+    - uses: kanga333/comment-hider@master
+      name: Hide bot comments
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        hide_user_name: ${{ inputs.user }}
+        issue_number: ${{ pr_number }}
