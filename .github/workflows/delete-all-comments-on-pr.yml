@@ -10,7 +10,7 @@ on:
         required: true
 
 permissions:
-  issues: write
+  issues: read
   pull-requests: write
 
 jobs:
