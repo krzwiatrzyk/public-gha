@@ -45,3 +45,12 @@ jobs:
 
     - name: List files
       run: ls
+
+  run-reusable:
+    needs:
+      - extract
+    uses: ./.github/workflows/test-comment-reusable.yml
+    with:
+      environment: ${{ needs.extract.outputs.environment }}
+      workspace: ${{ needs.extract.outputs.workspace }}
+      ref: refs/pull/${{ github.event.issue.number }}/head

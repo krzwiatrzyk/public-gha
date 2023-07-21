@@ -1,0 +1,28 @@
+name: Comment resuable
+
+on:
+  workflow_dispatch:
+  workflow_call:
+    inputs:
+      ref:
+        type: string
+        required: false
+      environment:
+        type: string
+      workspace:
+        type: string
+
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        ref: ${{ inputs.ref || github.sha }}
+    
+    - name: Print files
+      run: ls
+
+    - name: Git status
+      run: git status
