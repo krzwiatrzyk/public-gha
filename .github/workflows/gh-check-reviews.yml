@@ -1,0 +1,52 @@
+name: GH 
+run-name: 'Terraform apply run for PR comment'
+
+on:
+  issue_comment:                                     
+    types: 
+    - created
+
+permissions:
+  contents: read
+  id-token: write 
+  pull-requests: write
+  issues: write
+
+jobs:
+  react:
+    if: github.event.issue.pull_request && contains(github.event.comment.body, 'gh-test-approve')
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+  
+    - name: Add reactions
+      uses: peter-evans/create-or-update-comment@v2
+      with:
+        comment-id: ${{ github.event.comment.id }}
+        reactions: rocket
+
+    - name: Check if PR is approved
+      id: check-approval
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        gh pr view ${{ github.event.issue.number }} --json reviews
+
+        APPROVALS=$(gh pr view ${{ github.event.issue.number }} --json reviews \
+          | jq '.reviews | map(select(.state == "APPROVED")) | length')
+
+        echo "number=$APPROVALS" > $GITHUB_OUTPUT
+
+        echo "number=$APPROVALS"
+
+    - name: Create comment if not approved
+      uses: peter-evans/create-or-update-comment@v3
+      if: steps.check-approval.outputs.number == 0
+      with:
+        issue-number: ${{ github.event.issue.number }}
+        body: |
+            This PR is not approved yet. Please wait for approval before running apply.
+
+    - name: Fail if not approved
+      if: steps.check-approval.outputs.number == 0
+      run: exit 1
