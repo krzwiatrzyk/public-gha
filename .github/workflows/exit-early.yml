@@ -24,7 +24,7 @@ jobs:
           echo "exit=true" >> $GITHUB_OUTPUT
 
       - name: Step2
-        if: !steps.exit.outputs.exit
+        if: ! steps.exit.outputs.exit
         run: |
           echo "step2"
 
