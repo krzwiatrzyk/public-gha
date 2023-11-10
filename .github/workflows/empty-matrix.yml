@@ -1,11 +1,11 @@
-name: Exit early demo
+name: Empty matrix
 
 on:
   workflow_dispatch:
     inputs:
       list:
         description: 'Spaces separated string'
-        
+
 jobs:
   job1:
     runs-on: ubuntu-latest
