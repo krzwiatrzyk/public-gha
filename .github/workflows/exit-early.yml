@@ -15,6 +15,7 @@ jobs:
         run: |
           echo "step1"
           echo "TEST=" >> $GITHUB_ENV
+          echo $TEST
 
       - name: Exit early
         id: exit
