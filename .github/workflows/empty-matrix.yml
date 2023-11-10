@@ -22,12 +22,13 @@ jobs:
       - name: Generate matrix
         id: matrix
         run: |
-          json=$( go run .github/helpers/generate-list.go )
+          json=$( go run .github/helpers/generate-list.go ${{ inputs.list }} )
           echo "matrix=$json" >> $GITHUB_OUTPUT
 
   job2:
     runs-on: ubuntu-latest
     needs: job1
+    if: needs.job1.outputs.matrix != '[]'
     strategy:
       matrix: 
         list: ${{ fromJson(needs.job1.outputs.matrix) }}
@@ -35,3 +36,11 @@ jobs:
       - name: Echo list element
         run: |
           echo ${{ matrix.list }}
+
+  job3: 
+    runs-on: ubuntu-latest
+    needs: job2
+    steps:
+      - name: Echo list element
+        run: |
+            echo "hello"
