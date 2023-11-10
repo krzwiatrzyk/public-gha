@@ -23,7 +23,7 @@ jobs:
       - name: Generate matrix
         id: matrix
         run: |
-          json=$( go run .github/helpers/generate-images-list.go )
+          json=$( go run .github/helpers/generate-list.go )
           echo "matrix=$json" >> $GITHUB_OUTPUT
 
   job2:
