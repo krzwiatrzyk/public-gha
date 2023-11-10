@@ -1,0 +1,37 @@
+name: Exit early demo
+
+on:
+  workflow_dispatch:
+
+jobs:
+  job1:
+    runs-on: ubuntu-latest
+    env:
+      TEST: ""
+    outputs:
+      exit: ${{ steps.exit.outputs.exit }}
+    steps:
+      - name: Step1
+        run: |
+          echo "step1"
+          echo "TEST=" >> $GITHUB_ENV
+
+      - name: Exit early
+        id: exit
+        if: env.TEST == ''
+        run: |
+          echo "exit=true" >> $GITHUB_OUTPUT
+
+      - name: Step2
+        if: ${{ steps.exit.outputs.exit }}
+        run: |
+          echo "step2"
+
+  job2:
+    runs-on: ubuntu-latest
+    if: needs.job1.outputs.exit == 'true'
+    needs: job1
+    steps:
+      - name: Step3
+        run: |
+          echo "step3"
