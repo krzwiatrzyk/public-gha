@@ -24,13 +24,13 @@ jobs:
           echo "exit=true" >> $GITHUB_OUTPUT
 
       - name: Step2
-        if: ${{ steps.exit.outputs.exit }}
+        if: ! ${{ steps.exit.outputs.exit }}
         run: |
           echo "step2"
 
   job2:
     runs-on: ubuntu-latest
-    if: needs.job1.outputs.exit == 'true'
+    if: ! needs.job1.outputs.exit
     needs: job1
     steps:
       - name: Step3
