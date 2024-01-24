@@ -1,4 +1,6 @@
-name: Test job dependency 
+name: Test job dependency
+
+# Tested scenario: https://github.com/actions/runner/issues/2205 
 
 on:
   workflow_dispatch:
