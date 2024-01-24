@@ -20,6 +20,7 @@ jobs:
 
   job2:
     runs-on: ubuntu-latest
+    if: always() && (needs.job1.result == 'success' || needs.job1.result == 'skipped')
     needs:
     - job1
     steps:
