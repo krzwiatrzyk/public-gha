@@ -1,0 +1,28 @@
+name: Artifact test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Store
+      uses: actions/upload-artifact@v4
+      with:
+        name: file
+        path: README.md
+
+  download:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Download a single artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: file
+
+    - run: cat README.md
