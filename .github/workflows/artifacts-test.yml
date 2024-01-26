@@ -24,5 +24,6 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         name: file
+        path: .
 
     - run: cat README.md
